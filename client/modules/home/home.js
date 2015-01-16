@@ -5,7 +5,7 @@ Router.route('/', {
 });
 
 Template.home.rendered = function() {
-  this.$('#submit-organization').click(function(e) {
+  this.$('[name="organization-entry"]').submit(function(e) {
     e.preventDefault();
     var organization = $('#enter-organization').val();
     if (organization) {
