@@ -1,0 +1,22 @@
+<template name="github">
+  <h2>{{orgName}} contributions</h2>
+
+  Total: {{totalCount}}
+  <ul>
+  {{#each userData}}
+  <li>
+    <a href="{{member.html_url}}">
+      <div>{{member.login}}</div>
+      <div><img src="{{member.avatar_url}}&s=84"></div>
+    </a>
+    Total: {{count}}
+    <ul>
+    {{#each contributions}}
+      <li>Type: {{type}} / Repo: <a href="http://github.com/{{repo.name}}">{{repo.name}}</a></li>
+    {{/each}}
+    </ul>
+  </li>
+  {{/each}}
+  </ul> 
+    
+</template>
