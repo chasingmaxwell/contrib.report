@@ -45,7 +45,8 @@ Meteor.publish('github', function(organization) {
 
       // Retrieve data on the individual member.
       github.events.getFromUserPublic({
-        user: member.login
+        user: member.login,
+        per_page: 100
       }, function(err, res) {
 
         if (err) {
