@@ -1,24 +1,19 @@
-var GitHub = Meteor.npmRequire('github'),
-    Async = Meteor.npmRequire('async'),
-    github = new GitHub({
-      version: "3.0.0",
-      timeout: 5000,
-      headers: {
-        'user-agent': 'github-org-reports'
-      }
-    });
+// Initiate the GitHub object globally.
+GitHub = Meteor.npmRequire('github');
+github = new GitHub({
+  version: "3.0.0",
+  timeout: 5000,
+  headers: {
+    'user-agent': 'github-org-reports'
+  }
+});
+
+var async = Meteor.npmRequire('async');
 
 Meteor.publish('github', function(organization) {
   var self = this;
 
-  // Authenticate with GitHub API.
-  github.authenticate({
-    type: 'oauth',
-    key: 'ee60fd2624858d867b74',
-    secret: '4fe11dd808324bd8c59538fbc45bc7a4ade77f55'
-  });
-
-  Async.series({
+  async.series({
     members: function(callback) {
       // Retrieve members of organization.
       github.orgs.getMembers({
@@ -37,7 +32,7 @@ Meteor.publish('github', function(organization) {
       return;
     }
 
-    Async.each(members, function(member, index) {
+    async.each(members, function(member, index) {
       // Do not parse non-members.
       if (typeof member.login === 'undefined') {
         return;
