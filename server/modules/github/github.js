@@ -11,23 +11,28 @@ github = new GitHub({
 var async = Meteor.npmRequire('async');
 
 Meteor.publish('github', function(organization) {
-  var self = this;
+  var self = this,
+      parseResult = function(callback) {
+        return function(err, res) {
+          if (err) {
+            console.log(err);
+          }
+          callback(err, res);
+        };
+      };
 
   async.series({
     members: function(callback) {
       // Retrieve members of organization.
       github.orgs.getMembers({
         org: organization
-      }, function(err, res) {
-        callback(err, res);
-      });
+      }, parseResult(callback));
     }
   }, function(err, res) {
     var members = res.members,
         loaded = 0;
 
-    if (typeof members === 'undefined') {
-      console.log('No members found for organization.');
+    if (err || typeof members === 'undefined') {
       self.ready();
       return;
     }
@@ -38,23 +43,41 @@ Meteor.publish('github', function(organization) {
         return;
       }
 
-      // Retrieve data on the individual member.
-      github.events.getFromUserPublic({
-        user: member.login,
-        per_page: 100
+      async.parallel({
+        repos: function(callback) {
+          github.repos.getFromUser({
+            user: member.login
+          }, parseResult(callback));
+        },
+        events: function(callback) {
+          github.events.getFromUserPublic({
+            user: member.login,
+            per_page: 100
+          }, parseResult(callback));
+        }
       }, function(err, res) {
-
         if (err) {
-          console.log(err);
           return;
         }
 
         // Increment number of loaded users.
         loaded++;
 
-        if (res.length > 0) {
+        if (res.events.length > 0) {
           // Add user data.
-          self.added('userData', Random.id(), {member: member, contributions: res});
+          self.added('userData', Random.id(), {member: member, contributions: res.events});
+
+          // Add contributions.
+          async.each(res.events, function(contribution, index) {
+            self.added('contributions', Random.id(), contribution);
+          });
+        }
+
+        if (res.repos.length > 0) {
+          // Add repositories.
+          async.each(res.repos, function(repo, index) {
+            self.added('repos', Random.id(), repo);
+          });
         }
 
         // If all users have been loaded, the publication is ready.
