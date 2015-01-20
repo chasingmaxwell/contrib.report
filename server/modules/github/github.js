@@ -1,3 +1,9 @@
+/**
+ * @file
+ * Publications for github.
+ */
+/* globals Meteor */
+
 // Initiate the GitHub object globally.
 GitHub = Meteor.npmRequire('github');
 github = new GitHub({

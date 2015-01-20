@@ -1,3 +1,9 @@
+/**
+ * @file
+ * Contains code pertaining to the /org/:organization route.
+ */
+/* globals Meteor Router Template UserData */
+
 Router.route('/org/:organization', {
   waitOn: function() {
     return Meteor.subscribe('github', this.params.organization);
