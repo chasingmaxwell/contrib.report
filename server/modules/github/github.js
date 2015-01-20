@@ -4,7 +4,7 @@ github = new GitHub({
   version: "3.0.0",
   timeout: 5000,
   headers: {
-    'user-agent': 'github-org-reports'
+    'user-agent': 'contrib.report'
   }
 });
 
