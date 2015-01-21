@@ -64,6 +64,7 @@ Meteor.publish('github', function(organization) {
       }, function(err, res) {
         if (err) {
           self.error(new Meteor.Error(err.code, err));
+          return;
         }
 
         // Increment number of loaded users.
