@@ -21,7 +21,7 @@ Meteor.publish('github', function(organization) {
       parseResult = function(callback) {
         return function(err, res) {
           if (err) {
-            console.log(err);
+            throw new Meteor.Error(500, err);
           }
           callback(err, res);
         };
@@ -63,6 +63,7 @@ Meteor.publish('github', function(organization) {
         }
       }, function(err, res) {
         if (err) {
+          throw new Meteor.Error(500, err);
           return;
         }
 
