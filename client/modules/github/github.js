@@ -6,7 +6,16 @@
 
 Router.route('/org/:organization', {
   waitOn: function() {
-    return Meteor.subscribe('github', this.params.organization);
+    var self = this;
+    return Meteor.subscribe('github', this.params.organization, {
+      onError: function(err) {
+        if (err.error === 404) {
+          self.render('notFound');
+          return;
+        }
+        self.render('miscError');
+      }
+    });
   },
   action: function () {
     userData = UserData.find().fetch();

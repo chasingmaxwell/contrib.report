@@ -21,7 +21,7 @@ Meteor.publish('github', function(organization) {
       parseResult = function(callback) {
         return function(err, res) {
           if (err) {
-            console.log(err);
+            self.error(new Meteor.Error(err.code, err));
           }
           callback(err, res);
         };
@@ -63,7 +63,7 @@ Meteor.publish('github', function(organization) {
         }
       }, function(err, res) {
         if (err) {
-          return;
+          self.error(new Meteor.Error(err.code, err));
         }
 
         // Increment number of loaded users.
