@@ -2,7 +2,7 @@
  * @file
  * Publications for github.
  */
-/* globals Meteor */
+/* globals GitHub:true, github:true, Meteor, Random */
 
 // Initiate the GitHub object globally.
 GitHub = Meteor.npmRequire('github');
@@ -88,7 +88,7 @@ Meteor.publish('github', function(organization) {
         }
 
         // If all users have been loaded, the publication is ready.
-        if (loaded == members.length) {
+        if (loaded === members.length) {
           self.ready();
         }
       });
