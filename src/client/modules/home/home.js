@@ -2,7 +2,7 @@
  * @file
  * Contains code pertaining to the home page route.
  */
-/* globals Router Template */
+/* globals Router, Template, $ */
 
 Router.route('/', {
   action: function () {

@@ -1,2 +1,2 @@
-server/modules/deployment
-private/node_modules
+src/server/modules/deployment
+node_modules

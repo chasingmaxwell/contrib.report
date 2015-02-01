@@ -2,7 +2,7 @@
  * @file
  * Contains code pertaining to the /org/:organization route.
  */
-/* globals Meteor Router Template UserData */
+/* globals Meteor, Router, Template, UserData */
 
 Router.route('/org/:organization', {
   waitOn: function() {
@@ -18,7 +18,7 @@ Router.route('/org/:organization', {
     });
   },
   action: function () {
-    userData = UserData.find().fetch();
+    var userData = UserData.find().fetch();
 
     if (userData.length === 0) {
       this.render('notFound');

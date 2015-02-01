@@ -15,11 +15,10 @@ var gulp = require('gulp'),
  */
 gulp.task('cs', function () {
   return gulp.src([
-    '../**/*.js',
-    '!../.meteor/**/*.js',
-    '!../packages/**/*.js',
-    '!node_modules/**/*.js',
-    'gulpfile.js'
+    '**/*.js',
+    '!src/.meteor/**/*.js',
+    '!src/packages/**/*.js',
+    '!node_modules/**/*.js'
   ])
   .pipe(jshint())
   .pipe(jshint.reporter('default'))
