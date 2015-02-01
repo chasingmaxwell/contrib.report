@@ -1,0 +1,18 @@
+{
+  "name": "contrib.report",
+  "description": "A web application for displaying an organization's collective open source contributions through GitHub. http://contrib.report",
+  "version": "0.0.1",
+  "bugs": {
+    "url": "https://github.com/chasingmaxwell/contrib.report/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:chasingmaxwell/contrib.report.git"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "gulp": "~3.8.10",
+    "gulp-jscs": "^1.3.1",
+    "gulp-jshint": "^1.6.2"
+  }
+}
