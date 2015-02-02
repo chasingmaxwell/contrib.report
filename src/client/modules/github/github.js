@@ -2,7 +2,7 @@
  * @file
  * Contains code pertaining to the /org/:organization route.
  */
-/* globals Meteor, Router, Template, UserData */
+/* globals Meteor, Router, Template, UserData, Repos, _ */
 
 Router.route('/org/:organization', {
   waitOn: function() {
@@ -60,7 +60,7 @@ Template.github.helpers({
           languages[language].bytes += bytes;
         }
         else {
-          languages[language] = {language: language, bytes: bytes };
+          languages[language] = {language: language, bytes: bytes};
         }
         totalBytes += bytes;
       });
