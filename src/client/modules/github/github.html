@@ -1,6 +1,13 @@
 <template name="github">
   <h2>{{orgName}} contributions</h2>
 
+  Languages:
+  <ul>
+  {{#each languages}}
+    <li>{{language}}: {{percentage}}%</li>
+  {{/each}}
+  </ul>
+
   Total: {{totalCount}}
   <ul>
   {{#each userData}}
@@ -17,5 +24,5 @@
     </ul>
   </li>
   {{/each}}
-  </ul> 
+  </ul>
 </template>

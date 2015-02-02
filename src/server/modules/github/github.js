@@ -81,9 +81,26 @@ Meteor.publish('github', function(organization) {
         }
 
         if (res.repos.length > 0) {
-          // Add repositories.
+          // Add repositories with languages.
           async.each(res.repos, function(repo, index) {
-            self.added('repos', Random.id(), repo);
+            github.repos.getLanguages({
+              user: member.login,
+              repo: repo.name
+            }, function(err, res) {
+              if (err) {
+                self.error(new Meteor.Error(err.code, err));
+                return;
+              }
+
+              var languages = res;
+
+              if (typeof languages === 'object') {
+                delete languages.meta;
+              }
+
+              repo.languages = languages;
+              self.added('repos', Random.id(), repo);
+            });
           });
         }
 
@@ -95,4 +112,3 @@ Meteor.publish('github', function(organization) {
     });
   });
 });
-
