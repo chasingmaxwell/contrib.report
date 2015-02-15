@@ -2,7 +2,7 @@
  * @file
  * Contains code pertaining to the /org/:organization route.
  */
-/* globals Meteor, Router, Template, UserData, OrgData */
+/* globals Meteor, Router, Template, UserData, OrgData, _ */
 
 Router.route('/org/:organization', {
   waitOn: function() {
@@ -50,6 +50,34 @@ Template.github.helpers({
   },
   orgName: function() {
     return Router.current().params.organization;
+  },
+  languages: function() {
+    var languages = {},
+        totalBytes = 0;
+
+    // Iterate over repos collecting language data.
+    _.each(Repos.find().fetch(), function(repo, index) {
+      _.each(repo.languages, function(bytes, language) {
+        if (typeof languages[language] !== 'undefined') {
+          languages[language].bytes += bytes;
+        }
+        else {
+          languages[language] = {language: language, bytes: bytes};
+        }
+        totalBytes += bytes;
+      });
+    });
+
+    // Calculate language percentages.
+    _.each(languages, function(language) {
+      languages[language.language].percentage = ((language.bytes * 100) / totalBytes).toFixed(2);
+    });
+
+    // Sort languages by bytes.
+    languages = _.sortBy(languages, 'bytes');
+
+    // Return a languages array with the highest number of bytes at the top.
+    return _.values(languages).reverse();
   },
   activityIcon: function() {
     /**
