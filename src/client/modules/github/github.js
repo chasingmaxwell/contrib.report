@@ -2,7 +2,7 @@
  * @file
  * Contains code pertaining to the /org/:organization route.
  */
-/* globals Meteor, Router, Template, UserData */
+/* globals Meteor, Router, Template, UserData, OrgData */
 
 Router.route('/org/:organization', {
   waitOn: function() {
@@ -19,6 +19,7 @@ Router.route('/org/:organization', {
   },
   action: function () {
     var userData = UserData.find().fetch();
+    var orgData = OrgData.find().fetch();
 
     if (userData.length === 0) {
       this.render('notFound');
@@ -28,7 +29,8 @@ Router.route('/org/:organization', {
     this.render('github', {
       data: function () {
         return {
-          userData: userData
+          userData: userData,
+          orgData: orgData
         };
       }
     });
@@ -48,5 +50,64 @@ Template.github.helpers({
   },
   orgName: function() {
     return Router.current().params.organization;
+  },
+  activityIcon: function() {
+    /**
+		 * Change the activity icon class depending on what type of event it is.
+		 */
+    switch (this.type) {
+      case 'CommitCommentEvent':
+        return 'mdi-communication-forum';
+      case 'CreateEvent':
+        return 'mdi-content-add-box';
+      case 'DeleteEvent':
+        return 'mdi-navigation-close';
+      case 'DeploymentEvent':
+        return '';
+      case 'DeploymentStatusEvent':
+        return '';
+      case 'DownloadEvent':
+        return '';
+      case 'FollowEvent':
+        return 'mdi-action-visibility';
+      case 'ForkEvent':
+        return 'mdi-communication-call-split';
+      case 'ForkApplyEvent':
+        return '';
+      case 'GistEvent':
+        return 'mdi-action-assignment';
+      case 'IssueCommentEvent':
+        return 'mdi-communication-forum';
+      case 'IssuesEvent':
+        return 'mdi-content-inbox';
+      case 'MemberEvent':
+        return '';
+      case 'MembershipEvent':
+        return '';
+      case 'PageBuildEvent':
+        return '';
+      case 'PublicEvent':
+        return '';
+      case 'PullRequestEvent':
+        return 'mdi-content-forward flip';
+      case 'PullRequestReviewCommentEvent':
+        return 'mdi-communication-forum';
+      case 'PushEvent':
+        return 'mdi-content-forward';
+      case 'ReleaseEvent':
+        return '';
+      case 'PageBuildEvent':
+        return '';
+      case 'RepositoryEvent':
+        return '';
+      case 'StatusEvent':
+        return '';
+      case 'TeamAddEvent':
+        return 'mdi-action-group-work';
+      case 'WatchEvent':
+        return 'mdi-action-visibility';
+      default:
+        return 'mdi-action-language';
+    }
   }
 });
