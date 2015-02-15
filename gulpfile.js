@@ -1,12 +1,13 @@
 /**
  * @file
- * Portable Gulp tool that checks a Meteor installation for js syntax errors.
+ * Portable Gulp tool that checks a Meteor installation for js and scss syntax errors.
  */
 /* globals require */
 
 var gulp = require('gulp'),
     jshint = require('gulp-jshint'),
-    jscs = require('gulp-jscs');
+    jscs = require('gulp-jscs'),
+    scsslint = require('gulp-scss-lint');
 
 /**
  * @task lint
@@ -23,4 +24,13 @@ gulp.task('cs', function () {
   .pipe(jshint())
   .pipe(jshint.reporter('default'))
   .pipe(jscs());
+});
+
+/**
+ * @task scss-lint
+ *  Check for errors in the styles
+ */
+gulp.task('scss-lint', function() {
+  gulp.src('!src/client/scss/*.scss')
+  .pipe(scsslint());
 });
