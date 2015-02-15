@@ -2,7 +2,7 @@
  * @file
  * Contains code pertaining to the /org/:organization route.
  */
-/* globals Meteor, Router, Template, UserData, OrgData, _ */
+/* globals Meteor, Router, Template, UserData, OrgData, Repos, _ */
 
 Router.route('/org/:organization', {
   waitOn: function() {
