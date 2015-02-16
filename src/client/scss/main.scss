@@ -1,0 +1,47 @@
+$icon-size : 2.7rem;
+$font-size-large : 2.4rem;
+
+// Generals
+ul,
+ol {
+  list-style: none;
+}
+
+// Navbar
+.navbar-header {
+
+  .navbar-brand {
+    font-size: $font-size-large;
+  }
+}
+
+// Member Details
+.member-details {
+  h3 {
+    margin-top: 0;
+  }
+}
+
+// User Activity
+.user-activity {
+  // Icons
+  i:before {
+    font-size: $icon-size;
+  }
+}
+
+// Organization Sidebar
+.org-sidebar-details {
+  img {
+    width: 100%;
+  }
+}
+
+// Helpers
+.flip:before {
+  display: inline-block;
+  -moz-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  -webkit-transform: rotate(180deg);
+}

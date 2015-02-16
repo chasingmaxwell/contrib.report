@@ -28,6 +28,29 @@ Meteor.publish('github', function(organization) {
       };
 
   async.series({
+    organization: function(callback){
+      github.orgs.get({
+        org: organization
+      }, parseResult(callback));
+    }
+  }, function(err, res){
+    var org = res.organization;
+    if (err || typeof organization === 'undefined') {
+      self.ready();
+      return;
+    }
+    // Add organization data.
+    self.added('orgData', Random.id(), {
+      org_name: org.login,
+      avatar_url: org.avatar_url,
+      description: org.description,
+      blog: org.blog,
+      public_repos: org.public_repos,
+      created_at: org.created_at
+    });
+  });
+
+  async.series({
     members: function(callback) {
       // Retrieve members of organization.
       github.orgs.getMembers({
