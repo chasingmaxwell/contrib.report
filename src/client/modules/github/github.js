@@ -81,8 +81,8 @@ Template.github.helpers({
   },
   activityIcon: function() {
     /**
-		 * Change the activity icon class depending on what type of event it is.
-		 */
+     * Change the activity icon class depending on what type of event it is.
+     */
     switch (this.type) {
       case 'CommitCommentEvent':
         return 'mdi-communication-forum';
